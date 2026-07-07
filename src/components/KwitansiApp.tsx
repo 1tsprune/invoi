@@ -17,7 +17,6 @@ import { StorageToast } from "@/components/StorageToast";
 import { preloadCoreFonts } from "@/lib/fonts";
 import { getDictionary } from "@/lib/i18n";
 import { peekStoredLocale } from "@/lib/storage";
-import { isWelcomeSeen, markWelcomeSeen } from "@/lib/welcome";
 import { useAppStore } from "@/lib/store";
 import type { TabId } from "@/lib/types";
 
@@ -36,21 +35,13 @@ export function KwitansiApp() {
   const resetDocument = useAppStore((s) => s.resetDocument);
   const locale = useAppStore((s) => s.locale);
   const t = getDictionary(locale);
-  const [bootReady, setBootReady] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(true);
   const [showNewDocConfirm, setShowNewDocConfirm] = useState(false);
 
   useEffect(() => {
     hydrate();
     preloadCoreFonts();
-    setShowWelcome(!isWelcomeSeen());
-    setBootReady(true);
   }, [hydrate]);
-
-  function handleWelcomeStart() {
-    markWelcomeSeen();
-    setShowWelcome(false);
-  }
 
   function handleNewDoc() {
     setShowNewDocConfirm(true);
@@ -69,7 +60,7 @@ export function KwitansiApp() {
     }
   }
 
-  if (!bootReady || !hydrated) {
+  if (!hydrated) {
     const bootLocale = peekStoredLocale();
     const bootT = getDictionary(bootLocale);
     return (
@@ -80,7 +71,7 @@ export function KwitansiApp() {
   }
 
   if (showWelcome) {
-    return <WelcomeScreen onStart={handleWelcomeStart} />;
+    return <WelcomeScreen onStart={() => setShowWelcome(false)} />;
   }
 
   return (

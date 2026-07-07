@@ -9,7 +9,6 @@ import {
   storageLevelClass,
   type StorageSnapshot,
 } from "@/lib/storage-stats";
-import { isWelcomeSeen, markWelcomeSeen } from "@/lib/welcome";
 import { useAppStore } from "@/lib/store";
 
 export function DataBrowserPanel() {
@@ -32,9 +31,7 @@ export function DataBrowserPanel() {
   const brandClass = storageLevelClass(snap.invoiceStorageBytes / (2 * 1024 * 1024));
 
   function resetAll() {
-    const skipWelcome = isWelcomeSeen();
     localStorage.clear();
-    if (skipWelcome) markWelcomeSeen();
     window.location.reload();
   }
 

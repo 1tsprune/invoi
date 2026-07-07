@@ -463,7 +463,7 @@ const id: Dictionary = {
   welcomeSupport: "dukung pengembangannya dengan share ke teman-teman dan follow",
   welcomeSupportSuffix: "aku di X",
   startNow: "mulai sekarang",
-  developer: "pembuat",
+  developer: "Developer",
   follow: "ikuti",
   supporters: "pendukung",
   feature1: "QRIS dinamis",

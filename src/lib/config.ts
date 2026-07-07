@@ -21,6 +21,3 @@ export const SOCIAL = {
   },
 } as const;
 
-export const WELCOME_KEY = "invoi:welcome-seen";
-
-export const LEGACY_WELCOME_KEY = "kwitansi-cepat:welcome-seen";
