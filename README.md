@@ -120,7 +120,7 @@ Bikin invoice, kwitansi, dan penawaran online — gratis, langsung di browser, t
 ### Instalasi
 
 ```bash
-git clone https://github.com/itsprune/invoi.git
+git clone https://github.com/1tsprune/invoi.git
 cd invoi
 npm install
 npm run dev
