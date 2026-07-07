@@ -14,10 +14,10 @@ import { ScaledPreview } from "@/components/ScaledPreview";
 import { WelcomeScreen } from "@/components/WelcomeScreen";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import { StorageToast } from "@/components/StorageToast";
-import { LEGACY_WELCOME_KEY, WELCOME_KEY } from "@/lib/config";
 import { preloadCoreFonts } from "@/lib/fonts";
 import { getDictionary } from "@/lib/i18n";
 import { peekStoredLocale } from "@/lib/storage";
+import { isWelcomeSeen, markWelcomeSeen } from "@/lib/welcome";
 import { useAppStore } from "@/lib/store";
 import type { TabId } from "@/lib/types";
 
@@ -36,23 +36,19 @@ export function KwitansiApp() {
   const resetDocument = useAppStore((s) => s.resetDocument);
   const locale = useAppStore((s) => s.locale);
   const t = getDictionary(locale);
-  const [showWelcome, setShowWelcome] = useState<boolean | null>(null);
+  const [bootReady, setBootReady] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [showNewDocConfirm, setShowNewDocConfirm] = useState(false);
 
   useEffect(() => {
     hydrate();
     preloadCoreFonts();
+    setShowWelcome(!isWelcomeSeen());
+    setBootReady(true);
   }, [hydrate]);
 
-  useEffect(() => {
-    if (!hydrated) return;
-    const seen = localStorage.getItem(WELCOME_KEY) || localStorage.getItem(LEGACY_WELCOME_KEY);
-    setShowWelcome(!seen);
-  }, [hydrated]);
-
   function handleWelcomeStart() {
-    localStorage.setItem(WELCOME_KEY, "1");
-    localStorage.removeItem(LEGACY_WELCOME_KEY);
+    markWelcomeSeen();
     setShowWelcome(false);
   }
 
@@ -73,7 +69,7 @@ export function KwitansiApp() {
     }
   }
 
-  if (!hydrated || showWelcome === null) {
+  if (!bootReady || !hydrated) {
     const bootLocale = peekStoredLocale();
     const bootT = getDictionary(bootLocale);
     return (

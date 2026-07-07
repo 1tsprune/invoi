@@ -5,6 +5,7 @@ import { Shield, Sparkles, Zap } from "lucide-react";
 import { DevAvatar } from "@/components/DevAvatar";
 import { SOCIAL } from "@/lib/config";
 import { getDictionary } from "@/lib/i18n";
+import { peekStoredLocale } from "@/lib/storage";
 import { useAppStore } from "@/lib/store";
 
 type Props = {
@@ -14,7 +15,9 @@ type Props = {
 const FEATURE_ICONS = [Zap, Sparkles, Shield] as const;
 
 export function WelcomeScreen({ onStart }: Props) {
-  const locale = useAppStore((s) => s.locale);
+  const hydrated = useAppStore((s) => s.hydrated);
+  const storeLocale = useAppStore((s) => s.locale);
+  const locale = hydrated ? storeLocale : peekStoredLocale();
   const t = getDictionary(locale);
 
   const features = [
