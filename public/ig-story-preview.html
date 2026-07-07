@@ -12,7 +12,7 @@
     html, body { height: 100%; overflow: hidden; font-family: Inter, system-ui, sans-serif; }
     body { background: #000; }
 
-    .deck { height: 100dvh; width: 100%; position: relative; touch-action: pan-y; }
+    .deck { height: 100dvh; width: 100%; position: relative; touch-action: manipulation; }
 
     .slide {
       position: absolute;
@@ -165,12 +165,31 @@
     .hint-top.hidden { opacity: 0; pointer-events: none; }
 
     .spacer-top { margin-top: 56px; }
+
+    .nav-tap {
+      position: fixed;
+      top: 0;
+      bottom: 88px;
+      width: 40%;
+      z-index: 40;
+      border: none;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      -webkit-tap-highlight-color: transparent;
+      cursor: pointer;
+    }
+    .nav-tap.prev { left: 0; }
+    .nav-tap.next { right: 0; }
+    .nav-tap.full-bottom { bottom: 0; }
+
+    .dot { cursor: pointer; }
   </style>
 </head>
 <body>
   <div class="hint-top" id="hint">
-    📱 Screenshot tiap slide (Power + Volume Bawah)<br />
-    Tap <strong>Sembunyikan UI</strong> dulu biar bersih → geser → screenshot
+    📱 <strong>Tap kanan</strong> layar = slide berikutnya · <strong>tap kiri</strong> = balik<br />
+    Atau swipe kiri/kanan · screenshot tiap slide (Power + Vol. Bawah)
   </div>
 
   <div class="deck" id="deck">
@@ -248,6 +267,9 @@
     </section>
   </div>
 
+  <button type="button" class="nav-tap prev" id="tapPrev" aria-label="Slide sebelumnya"></button>
+  <button type="button" class="nav-tap next" id="tapNext" aria-label="Slide berikutnya"></button>
+
   <div class="chrome" id="chrome">
     <div class="dots" id="dots"></div>
     <button type="button" class="btn-ghost" id="hideUi">Sembunyikan UI</button>
@@ -261,12 +283,18 @@
     const hideUi = document.getElementById("hideUi");
     const chrome = document.getElementById("chrome");
     const hint = document.getElementById("hint");
+    const tapPrev = document.getElementById("tapPrev");
+    const tapNext = document.getElementById("tapNext");
+    const deck = document.getElementById("deck");
     let i = 0;
     let uiHidden = false;
+    let touchX = 0;
+    let touchY = 0;
 
     slides.forEach((_, idx) => {
       const d = document.createElement("span");
       d.className = "dot" + (idx === 0 ? " on" : "");
+      d.addEventListener("click", () => show(idx));
       dotsEl.appendChild(d);
     });
 
@@ -275,23 +303,54 @@
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
       [...dotsEl.children].forEach((d, idx) => d.classList.toggle("on", idx === i));
       nextBtn.textContent = i === slides.length - 1 ? "Selesai ✓" : "Slide berikutnya →";
-      document.querySelector(".bg-dark")?.style && (document.documentElement.style.background = slides[i].classList.contains("bg-dark") ? "#18181b" : "#000");
+      document.documentElement.style.background = slides[i].classList.contains("bg-dark") ? "#18181b" : "#000";
     }
 
-    nextBtn.addEventListener("click", () => show(i + 1));
-    hideUi.addEventListener("click", () => {
+    function syncNav() {
+      const full = uiHidden ? "full-bottom" : "";
+      tapPrev.classList.toggle("full-bottom", uiHidden);
+      tapNext.classList.toggle("full-bottom", uiHidden);
+    }
+
+    nextBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      show(i + 1);
+    });
+    tapPrev.addEventListener("click", () => show(i - 1));
+    tapNext.addEventListener("click", () => show(i + 1));
+
+    hideUi.addEventListener("click", (e) => {
+      e.stopPropagation();
       uiHidden = !uiHidden;
       chrome.classList.toggle("hidden", uiHidden);
       hint.classList.toggle("hidden", uiHidden);
       hideUi.textContent = uiHidden ? "Tampilkan UI" : "Sembunyikan UI";
+      syncNav();
     });
 
-    let touchX = 0;
-    document.getElementById("deck").addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
-    document.getElementById("deck").addEventListener("touchend", (e) => {
-      const dx = e.changedTouches[0].clientX - touchX;
-      if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1));
-    }, { passive: true });
+    deck.addEventListener(
+      "touchstart",
+      (e) => {
+        touchX = e.touches[0].clientX;
+        touchY = e.touches[0].clientY;
+      },
+      { passive: true },
+    );
+
+    deck.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        const dy = e.changedTouches[0].clientY - touchY;
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 36) {
+          show(i + (dx < 0 ? 1 : -1));
+        }
+      },
+      { passive: true },
+    );
+
+    syncNav();
   </script>
 </body>
 </html>
