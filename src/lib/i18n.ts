@@ -177,6 +177,14 @@ export type Dictionary = {
   backgroundOverlay: string;
   backgroundOverlayHint: string;
   backgroundSize: string;
+  backgroundPosition: string;
+  backgroundPositionX: string;
+  backgroundPositionY: string;
+  backgroundPosCenter: string;
+  backgroundPosTop: string;
+  backgroundPosBottom: string;
+  backgroundPosLeft: string;
+  backgroundPosRight: string;
   enableBackground: string;
   addWatermark: string;
   watermarkSub: string;
@@ -364,6 +372,14 @@ const id: Dictionary = {
   backgroundOverlay: "Overlay Warna",
   backgroundOverlayHint: "Lapisan warna di atas gambar supaya teks tetap terbaca",
   backgroundSize: "Mode Tampilan",
+  backgroundPosition: "Posisi Gambar",
+  backgroundPositionX: "Horizontal",
+  backgroundPositionY: "Vertikal",
+  backgroundPosCenter: "Tengah",
+  backgroundPosTop: "Atas",
+  backgroundPosBottom: "Bawah",
+  backgroundPosLeft: "Kiri",
+  backgroundPosRight: "Kanan",
   enableBackground: "Aktifkan gambar latar belakang",
   addWatermark: "Tambah Watermark",
   watermarkSub: "Kustom watermark buat invoice kamu",
@@ -588,6 +604,14 @@ const en: Dictionary = {
   backgroundOverlay: "Color Overlay",
   backgroundOverlayHint: "Color layer on top of image so text stays readable",
   backgroundSize: "Display Mode",
+  backgroundPosition: "Image Position",
+  backgroundPositionX: "Horizontal",
+  backgroundPositionY: "Vertical",
+  backgroundPosCenter: "Center",
+  backgroundPosTop: "Top",
+  backgroundPosBottom: "Bottom",
+  backgroundPosLeft: "Left",
+  backgroundPosRight: "Right",
   enableBackground: "Enable background image",
   addWatermark: "Add Watermark",
   watermarkSub: "Customize watermark for your invoice",

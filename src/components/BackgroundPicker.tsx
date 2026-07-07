@@ -14,6 +14,8 @@ type Props = {
   presetId: string | null;
   opacity: number;
   size: BackgroundSize;
+  positionX: number;
+  positionY: number;
   overlay: number;
   onChange: (patch: {
     showBackgroundImage?: boolean;
@@ -21,9 +23,19 @@ type Props = {
     backgroundPresetId?: string | null;
     backgroundOpacity?: number;
     backgroundSize?: BackgroundSize;
+    backgroundPositionX?: number;
+    backgroundPositionY?: number;
     backgroundOverlay?: number;
   }) => void;
 };
+
+const POSITION_PRESETS = [
+  { id: "center", x: 50, y: 50 },
+  { id: "top", x: 50, y: 0 },
+  { id: "bottom", x: 50, y: 100 },
+  { id: "left", x: 0, y: 50 },
+  { id: "right", x: 100, y: 50 },
+] as const;
 
 export function BackgroundPicker({
   show,
@@ -31,11 +43,22 @@ export function BackgroundPicker({
   presetId,
   opacity,
   size,
+  positionX,
+  positionY,
   overlay,
   onChange,
 }: Props) {
   const locale = useAppStore((s) => s.locale);
   const t = getDictionary(locale);
+  const posCss = `${positionX}% ${positionY}%`;
+
+  const presetLabels: Record<(typeof POSITION_PRESETS)[number]["id"], string> = {
+    center: t.backgroundPosCenter,
+    top: t.backgroundPosTop,
+    bottom: t.backgroundPosBottom,
+    left: t.backgroundPosLeft,
+    right: t.backgroundPosRight,
+  };
 
   async function handleUpload(file: File | null) {
     if (!file) return;
@@ -169,6 +192,61 @@ export function BackgroundPicker({
           </label>
 
           {imageUrl ? (
+            <>
+              <div>
+                <Label>{t.backgroundPosition}</Label>
+                <div className="mt-1.5 flex flex-wrap gap-1.5">
+                  {POSITION_PRESETS.map(({ id, x, y }) => {
+                    const active = positionX === x && positionY === y;
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => onChange({ backgroundPositionX: x, backgroundPositionY: y })}
+                        className={`rounded-lg border px-2.5 py-1.5 text-[10px] font-semibold transition-colors ${
+                          active
+                            ? "border-zinc-900 bg-zinc-900 text-white"
+                            : "border-zinc-200 text-zinc-600 hover:border-zinc-400"
+                        }`}
+                      >
+                        {presetLabels[id]}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <label className="block">
+                <Label>
+                  {t.backgroundPositionX} ({positionX}%)
+                </Label>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={positionX}
+                  onChange={(e) => onChange({ backgroundPositionX: Number(e.target.value) })}
+                  className="w-full"
+                />
+              </label>
+
+              <label className="block">
+                <Label>
+                  {t.backgroundPositionY} ({positionY}%)
+                </Label>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={positionY}
+                  onChange={(e) => onChange({ backgroundPositionY: Number(e.target.value) })}
+                  className="w-full"
+                />
+              </label>
+            </>
+          ) : null}
+
+          {imageUrl ? (
             <div className="overflow-hidden rounded-xl border border-zinc-100">
               <div className="relative h-24">
                 <div
@@ -177,6 +255,7 @@ export function BackgroundPicker({
                     backgroundImage: size === "repeat" ? `url(${imageUrl})` : undefined,
                     backgroundRepeat: size === "repeat" ? "repeat" : undefined,
                     backgroundSize: size === "repeat" ? "80px" : undefined,
+                    backgroundPosition: size === "repeat" ? posCss : undefined,
                   }}
                 >
                   {size !== "repeat" ? (
@@ -185,10 +264,19 @@ export function BackgroundPicker({
                       src={imageUrl}
                       alt=""
                       className="h-full w-full"
-                      style={{ objectFit: size, opacity: opacity / 100 }}
+                      style={{ objectFit: size, objectPosition: posCss, opacity: opacity / 100 }}
                     />
                   ) : (
-                    <div className="h-full w-full" style={{ backgroundImage: `url(${imageUrl})`, backgroundRepeat: "repeat", backgroundSize: "60px", opacity: opacity / 100 }} />
+                    <div
+                      className="h-full w-full"
+                      style={{
+                        backgroundImage: `url(${imageUrl})`,
+                        backgroundRepeat: "repeat",
+                        backgroundSize: "60px",
+                        backgroundPosition: posCss,
+                        opacity: opacity / 100,
+                      }}
+                    />
                   )}
                 </div>
                 <div className="absolute inset-0 bg-white" style={{ opacity: overlay / 100 }} />

@@ -128,6 +128,8 @@ export function BrandTab() {
           presetId={brand.backgroundPresetId}
           opacity={brand.backgroundOpacity}
           size={brand.backgroundSize}
+          positionX={brand.backgroundPositionX}
+          positionY={brand.backgroundPositionY}
           overlay={brand.backgroundOverlay}
           onChange={(patch) => setBrand(patch)}
         />

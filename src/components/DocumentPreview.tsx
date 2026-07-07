@@ -371,6 +371,9 @@ export const DocumentPreview = forwardRef<HTMLDivElement, Props>(function Docume
   };
 
   const showBg = brand.showBackgroundImage && !!brand.backgroundImageUrl;
+  const bgPosX = brand.backgroundPositionX ?? 50;
+  const bgPosY = brand.backgroundPositionY ?? 50;
+  const bgPosition = `${bgPosX}% ${bgPosY}%`;
 
   return (
     <div ref={ref} id="invoice-preview" style={s.root}>
@@ -384,6 +387,7 @@ export const DocumentPreview = forwardRef<HTMLDivElement, Props>(function Docume
               backgroundImage: `url(${brand.backgroundImageUrl})`,
               backgroundRepeat: "repeat",
               backgroundSize: "120px",
+              backgroundPosition: bgPosition,
               opacity: brand.backgroundOpacity / 100,
               pointerEvents: "none",
               zIndex: 0,
@@ -400,6 +404,7 @@ export const DocumentPreview = forwardRef<HTMLDivElement, Props>(function Docume
               width: "100%",
               height: "100%",
               objectFit: brand.backgroundSize,
+              objectPosition: bgPosition,
               opacity: brand.backgroundOpacity / 100,
               pointerEvents: "none",
               zIndex: 0,

@@ -74,6 +74,8 @@ export type BrandData = {
   showBackgroundImage: boolean;
   backgroundOpacity: number;
   backgroundSize: BackgroundSize;
+  backgroundPositionX: number;
+  backgroundPositionY: number;
   backgroundOverlay: number;
   qrisEnabled: boolean;
   qrisImageUrl: string | null;

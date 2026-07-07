@@ -61,6 +61,8 @@ export function createDefaultBrand(overrides: Partial<BrandData> = {}): BrandDat
     showBackgroundImage: false,
     backgroundOpacity: 35,
     backgroundSize: "cover",
+    backgroundPositionX: 50,
+    backgroundPositionY: 50,
     backgroundOverlay: 55,
     watermarkRotation: 0,
     qrisEnabled: false,
