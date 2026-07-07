@@ -157,7 +157,7 @@ Rekomendasi deploy: **[Vercel](https://vercel.com)** — native support untuk Ne
 Set environment variable di Vercel:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
+NEXT_PUBLIC_SITE_URL=https://invoi-nine.vercel.app
 ```
 
 Ini untuk SEO (`metadataBase`, sitemap, OG image). Lihat `.env.example`.
