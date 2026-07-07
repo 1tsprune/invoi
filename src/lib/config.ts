@@ -5,7 +5,7 @@ export const APP = {
 } as const;
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://invoi.1tsprune.com";
 
 export const DONATION = {
   url: "https://trakteer.id/prunepruneprune/gift",

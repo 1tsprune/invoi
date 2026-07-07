@@ -23,4 +23,4 @@ jobs:
 
       - run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: https://invoi.vercel.app
+          NEXT_PUBLIC_SITE_URL: https://invoi.1tsprune.com
