@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+body {
+  background: #fafafa;
+  color: #18181b;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes goalShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes goalPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.donation-goal-shimmer {
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(255, 255, 255, 0.45) 45%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.45) 55%,
+    transparent 70%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: goalShimmer 2.8s ease-in-out infinite;
+}
+
+.donation-goal-pulse {
+  background: radial-gradient(circle at right, rgba(255, 184, 0, 0.5) 0%, transparent 70%);
+  animation: goalPulse 2s ease-in-out infinite;
+}

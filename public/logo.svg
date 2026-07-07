@@ -1,0 +1,17 @@
+<svg width="320" height="80" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Invoi">
+  <defs>
+    <linearGradient id="icon-grad" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="0.5" stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="text-grad" x1="72" y1="16" x2="300" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18181b"/>
+      <stop offset="0.45" stop-color="#3f3f46"/>
+      <stop offset="1" stop-color="#71717a"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="12" width="56" height="56" rx="16" fill="url(#icon-grad)"/>
+  <text x="32" y="50" text-anchor="middle" fill="white" font-size="24" font-weight="900" font-family="Inter, system-ui, sans-serif" letter-spacing="-0.05em">in</text>
+  <text x="76" y="52" fill="url(#text-grad)" font-size="42" font-weight="800" font-family="Inter, system-ui, sans-serif" letter-spacing="-0.06em">invoi</text>
+</svg>
