@@ -154,7 +154,13 @@ npm run start
 
 Rekomendasi deploy: **[Vercel](https://vercel.com)** — native support untuk Next.js.
 
-Setelah deploy, tambahkan `metadataBase` di `src/app/layout.tsx` supaya OG image pakai domain production.
+Set environment variable di Vercel:
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
+```
+
+Ini untuk SEO (`metadataBase`, sitemap, OG image). Lihat `.env.example`.
 
 ---
 

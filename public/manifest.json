@@ -1,0 +1,18 @@
+{
+  "name": "Invoi — Invoice Satset",
+  "short_name": "Invoi",
+  "description": "Bikin invoice, kwitansi, dan penawaran online. Gaperlu login.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#6366f1",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

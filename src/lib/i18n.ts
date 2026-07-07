@@ -235,6 +235,10 @@ export type Dictionary = {
   faqNoLoginAnswer: string;
   faqNoAccount: string;
   faqNoAccountAnswer: string;
+  loading: string;
+  dismiss: string;
+  storageQuotaTitle: string;
+  storageQuotaAction: string;
 };
 
 const id: Dictionary = {
@@ -481,6 +485,10 @@ const id: Dictionary = {
   faqNoAccount: "Kenapa tidak ada login?",
   faqNoAccountAnswer:
     "Invoi dirancang satset tanpa akun. Data kamu di browser — rutin Simpan Data biar aman.",
+  loading: "Memuat...",
+  dismiss: "Tutup",
+  storageQuotaTitle: "Penyimpanan browser penuh",
+  storageQuotaAction: "Buka tab Unduh → Simpan Data",
 };
 
 const en: Dictionary = {
@@ -700,6 +708,10 @@ const en: Dictionary = {
   faqNoAccount: "Why is there no login?",
   faqNoAccountAnswer:
     "Invoi is built to work without an account. Data stays in your browser — back up regularly via Save Data.",
+  loading: "Loading...",
+  dismiss: "Dismiss",
+  storageQuotaTitle: "Browser storage is full",
+  storageQuotaAction: "Open Export tab → Save Data",
 };
 
 const dict: Record<Locale, Dictionary> = { id, en };

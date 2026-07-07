@@ -15,7 +15,9 @@ import type {
 type AppStore = AppData & {
   activeTab: TabId;
   hydrated: boolean;
+  storageToast: boolean;
   hydrate: () => void;
+  clearStorageToast: () => void;
   setActiveTab: (tab: TabId) => void;
   setLocale: (locale: Locale) => void;
   setInvoice: (patch: Partial<InvoiceData>) => void;
@@ -33,6 +35,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
   ...createDefaultAppData(),
   activeTab: "form",
   hydrated: false,
+  storageToast: false,
+
+  clearStorageToast: () => set({ storageToast: false }),
 
   hydrate: () => {
     if (get().hydrated) return;
@@ -101,6 +106,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
 
   persist: () => {
     const { invoice, brand, inventory, locale } = get();
-    saveAppData({ invoice, brand, inventory, locale });
+    const result = saveAppData({ invoice, brand, inventory, locale });
+    if (!result.ok) set({ storageToast: true });
   },
 }));

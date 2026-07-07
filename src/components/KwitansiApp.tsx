@@ -13,9 +13,11 @@ import { PreviewColumn } from "@/components/PreviewColumn";
 import { ScaledPreview } from "@/components/ScaledPreview";
 import { WelcomeScreen } from "@/components/WelcomeScreen";
 import { ConfirmModal } from "@/components/ConfirmModal";
+import { StorageToast } from "@/components/StorageToast";
 import { LEGACY_WELCOME_KEY, WELCOME_KEY } from "@/lib/config";
 import { preloadCoreFonts } from "@/lib/fonts";
 import { getDictionary } from "@/lib/i18n";
+import { peekStoredLocale } from "@/lib/storage";
 import { useAppStore } from "@/lib/store";
 import type { TabId } from "@/lib/types";
 
@@ -72,9 +74,11 @@ export function KwitansiApp() {
   }
 
   if (!hydrated || showWelcome === null) {
+    const bootLocale = peekStoredLocale();
+    const bootT = getDictionary(bootLocale);
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#fafafa] text-sm text-zinc-500">
-        Memuat...
+        {bootT.loading}
       </div>
     );
   }
@@ -203,6 +207,8 @@ export function KwitansiApp() {
           resetDocument();
         }}
       />
+
+      <StorageToast />
     </div>
   );
 }

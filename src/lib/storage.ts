@@ -1,7 +1,9 @@
 import { APP } from "./config";
 import { createDefaultAppData } from "./defaults";
 import { normalizeImportedData } from "./migrate-import";
-import type { AppData, InvoiceData, OtherCost } from "./types";
+import type { AppData, InvoiceData, Locale, OtherCost } from "./types";
+
+export type SaveResult = { ok: true } | { ok: false; reason: "quota" | "unknown" };
 
 export const STORAGE_KEY = `${APP.slug}:v1`;
 const LEGACY_STORAGE_KEY = "kwitansi-cepat:v2";
@@ -50,12 +52,29 @@ export function loadAppData(): AppData {
   }
 }
 
-export function saveAppData(data: AppData): void {
-  if (typeof window === "undefined") return;
+export function peekStoredLocale(): Locale {
+  if (typeof window === "undefined") return "id";
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return navigator.language.toLowerCase().startsWith("en") ? "en" : "id";
+    }
+    const parsed = JSON.parse(raw) as Partial<AppData>;
+    return parsed.locale === "en" ? "en" : "id";
+  } catch {
+    return "id";
+  }
+}
+
+export function saveAppData(data: AppData): SaveResult {
+  if (typeof window === "undefined") return { ok: true };
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    // quota exceeded
+    return { ok: true };
+  } catch (err) {
+    const name = err instanceof DOMException ? err.name : "";
+    if (name === "QuotaExceededError") return { ok: false, reason: "quota" };
+    return { ok: false, reason: "unknown" };
   }
 }
 
