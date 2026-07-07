@@ -32,7 +32,7 @@ export function FontPicker({ label, value, fonts, script = false, onChange }: Pr
   return (
     <div>
       <div className="mb-2 flex items-center justify-between gap-2">
-        <span className="text-[9px] font-semibold uppercase tracking-wider text-zinc-400">{label}</span>
+        <span className="text-[10px] font-bold text-zinc-900">{label}</span>
         <span className="text-[9px] font-medium text-zinc-400">{fonts.length} {t.fontsAvailable}</span>
       </div>
       <div className="relative mb-2">

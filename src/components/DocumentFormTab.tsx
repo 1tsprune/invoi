@@ -46,7 +46,7 @@ export function DocumentFormTab() {
       <Panel>
         <div className="mb-2 flex items-center gap-2">
           <Package className="h-3.5 w-3.5 text-zinc-400" />
-          <span className="text-[11px] font-semibold tracking-tight text-zinc-700">{t.productsServices}</span>
+          <span className="text-[12px] font-bold text-zinc-900">{t.productsServices}</span>
         </div>
         <div className="flex rounded-lg border border-zinc-200 bg-zinc-50 p-0.5">
           <button
@@ -220,7 +220,7 @@ export function DocumentFormTab() {
                   ) : null}
                 </label>
                 <div className="flex flex-col items-end justify-between gap-1 sm:col-span-2">
-                  <p className="text-[10px] font-bold text-zinc-400">{t.itemSubtotal}</p>
+                  <p className="text-[10px] font-bold text-zinc-900">{t.itemSubtotal}</p>
                   <p className="text-sm font-bold text-zinc-800">
                     {formatMoney(lineSubtotal(item.qty, item.price), invoice.currency)}
                   </p>
@@ -278,7 +278,7 @@ export function DocumentFormTab() {
       </Card>
 
       <Card title={t.otherCosts}>
-        <label className="mb-3 flex items-center gap-2 text-sm">
+        <label className="mb-3 flex items-center gap-2 text-sm font-bold text-zinc-900">
           <input
             type="checkbox"
             checked={invoice.otherCostEnabled}
@@ -358,7 +358,7 @@ export function DocumentFormTab() {
       <Card title={t.discountTaxTitle}>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-2 flex items-center gap-2 text-sm">
+            <label className="mb-2 flex items-center gap-2 text-sm font-bold text-zinc-900">
               <input
                 type="checkbox"
                 checked={invoice.discountEnabled}
@@ -377,7 +377,7 @@ export function DocumentFormTab() {
             ) : null}
           </div>
           <div>
-            <label className="mb-2 flex items-center gap-2 text-sm">
+            <label className="mb-2 flex items-center gap-2 text-sm font-bold text-zinc-900">
               <input
                 type="checkbox"
                 checked={invoice.taxEnabled}

@@ -5,9 +5,9 @@ const fieldClass =
 
 export function Label({ children, hint }: { children: ReactNode; hint?: string }) {
   return (
-    <span className="mb-1 block text-[9px] font-semibold uppercase tracking-wider text-zinc-400">
+    <span className="mb-1 block text-[10px] font-bold text-zinc-900">
       {children}
-      {hint ? <span className="ml-1 font-normal normal-case tracking-normal text-zinc-300">{hint}</span> : null}
+      {hint ? <span className="ml-1 font-medium text-zinc-500">{hint}</span> : null}
     </span>
   );
 }
@@ -29,7 +29,7 @@ export function Card({ title, children, action, sub }: { title: string; children
     <section className="rounded-xl border border-zinc-100 bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">{title}</h2>
+          <h2 className="text-[12px] font-bold text-zinc-900">{title}</h2>
           {sub ? <p className="mt-0.5 text-[10px] text-zinc-400">{sub}</p> : null}
         </div>
         {action}
@@ -64,7 +64,7 @@ export function SectionHeader({ title, sub, action }: { title: string; sub?: str
   return (
     <div className="flex items-start justify-between gap-3">
       <div>
-        <h2 className="text-[13px] font-semibold text-zinc-900">{title}</h2>
+        <h2 className="text-[13px] font-bold text-zinc-900">{title}</h2>
         {sub ? <p className="mt-0.5 text-[10px] text-zinc-400">{sub}</p> : null}
       </div>
       {action}
